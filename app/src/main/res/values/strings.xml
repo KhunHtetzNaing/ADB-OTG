@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Flashbot</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="waiting_device">Waiting for device</string>
+    <string name="ready_flash_apks">Ready Flash Apks</string>
+    <string name="flashing_apks">Flashing Apks</string>
+    <string name="authorize_hint">Replug and authorize</string>
+
+</resources>

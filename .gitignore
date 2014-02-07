@@ -1,0 +1,8 @@
+.gradle
+gradle/
+app/app.iml
+Flashbot.iml
+/local.properties
+.idea
+.DS_Store
+

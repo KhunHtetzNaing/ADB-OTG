@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#f4f4f4"
+    tools:context="com.wandoujia.flashbot.MainActivity$PlaceholderFragment">
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/waiting_device"
+            android:textSize="32sp"
+            android:id="@+id/flashButton"
+            android:textColor="#ffffff"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button_waiting"
+            />
+
+    <TextView
+        android:text="00/00"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_height="wrap_content" android:id="@+id/textView"
+        android:layout_below="@+id/flashButton"
+        android:maxLines = "1024000"
+        android:textSize="96sp"
+        android:textColor="#666666"
+        android:scrollbars="vertical"/>
+
+    <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="32dp"
+            android:id="@+id/imageView" android:layout_gravity="center_horizontal"/>
+
+
+</LinearLayout>

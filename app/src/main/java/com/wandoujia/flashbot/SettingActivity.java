@@ -7,29 +7,41 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SettingActivity extends ListActivity {
+public class SettingActivity extends ActionBarActivity {
 
     private Handler handler = new Handler();
+    private ListView listView;
+
+    private Set<String> selection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+
+        listView = (ListView) findViewById(R.id.list);
+
         final PackageManager packageManager = getPackageManager();
 
-        final Set<String> selection = Config.getApks(this);
+        selection = Config.getApks(this);
         final ArrayAdapter<PackageInfo> adapter = new ArrayAdapter<PackageInfo>(this, R.layout.package_item) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -60,8 +72,22 @@ public class SettingActivity extends ListActivity {
                 return vi;
             }
         };
-        setListAdapter(adapter);
+        listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PackageInfo item = (PackageInfo) listView.getAdapter().getItem(position);
+
+                if (selection.contains(item.packageName)) {
+                    selection.remove(item.packageName);
+                    view.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                } else {
+                    selection.add(item.packageName);
+                    view.setBackgroundColor(getResources().getColor(R.color.light_green));
+                }
+            }
+        });
         new Thread() {
             @Override
             public void run() {
@@ -97,22 +123,21 @@ public class SettingActivity extends ListActivity {
         }.start();
     }
 
+
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        PackageInfo item = (PackageInfo) getListAdapter().getItem(position);
-        Set<String> selected = Config.getApks(this);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.setting, menu);
 
-        if (selected.contains(item.packageName)) {
-            selected.remove(item.packageName);
-            v.setBackgroundColor(getResources().getColor(R.color.light_gray));
-        } else {
-            selected.add(item.packageName);
-            v.setBackgroundColor(getResources().getColor(R.color.light_green));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.save_settings) {
+            Config.saveApks(this, selection);
+            finish();
         }
-
-        Config.saveApks(this, selected);
-
-
+        return super.onOptionsItemSelected(item);
     }
 
     static class ItemHolder {

@@ -34,7 +34,7 @@
         <activity
             android:name="com.wandoujia.flashbot.SettingActivity"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_setting" >
+            android:theme="@style/Theme.AppCompat.Light">
         </activity>
     </application>
 

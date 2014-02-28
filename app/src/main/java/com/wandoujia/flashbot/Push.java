@@ -81,7 +81,5 @@ public class Push {
         Log.d(Const.TAG, new String(res));
 
         stream.write(ByteUtils.concat("QUIT".getBytes(), ByteUtils.intToByteArray(0)));
-
-        handler.sendMessage(handler.obtainMessage(Message.INSTALLING_PROGRESS, 80, 0));
     }
 }

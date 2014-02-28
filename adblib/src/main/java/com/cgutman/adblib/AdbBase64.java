@@ -1,4 +1,4 @@
-package com.mrkid.adblib;
+package com.cgutman.adblib;
 
 /**
  * This interface specifies the required functions for AdbCrypto to

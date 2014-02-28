@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_alignParentLeft="true"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/packageIcon"
+        />
+    <TextView
+        android:id="@+id/packageTitle"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_toRightOf="@id/packageIcon"
+        android:layout_centerVertical="true"
+        android:textSize="20sp"
+        />
+</RelativeLayout>

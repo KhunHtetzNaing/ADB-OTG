@@ -1,5 +1,8 @@
 package com.wandoujia.flashbot;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 /**
  * Created by xudong on 2/22/14.
  */
@@ -25,13 +28,7 @@ public class ByteUtils {
         return result;
     }
 
-    // TODO: big/little ending
     public static final byte[] intToByteArray(int value) {
-        return new byte[]{
-                (byte) value,
-                (byte) (value >>> 8),
-                (byte) (value >>> 16),
-                (byte) (value >>> 24)
-        };
+        return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(value).array();
     }
 }

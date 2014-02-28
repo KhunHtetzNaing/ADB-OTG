@@ -1,7 +1,78 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/light_gray"
     tools:context="com.wandoujia.flashbot.MainActivity"
-    tools:ignore="MergeRootFrame" />
+    android:weightSum="1">
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/waiting_device"
+            android:textSize="32sp"
+            android:id="@+id/flashButton"
+            android:textColor="@color/white"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button_waiting"
+            />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/setup_hint"
+        android:textSize="32sp"
+        android:id="@+id/setupButton"
+        android:textColor="@color/white"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_ready"
+        android:visibility="gone"
+        />
+
+
+    <TextView
+        android:text="00/00"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_height="wrap_content" android:id="@+id/textView"
+        android:layout_below="@+id/flashButton"
+        android:textSize="96sp"
+        android:textColor="@color/dark_gray"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_height="wrap_content" android:id="@+id/hintView"
+        android:layout_below="@+id/flashButton"
+        android:textSize="24sp"
+        android:textColor="@color/dark_gray"
+        android:visibility="gone"
+        />
+
+    <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="24dp"
+            android:visibility="invisible"
+            android:id="@+id/imageView" android:layout_gravity="center_horizontal"/>
+
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_marginTop="24dp"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"/>
+
+
+
+</LinearLayout>

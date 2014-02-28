@@ -1,4 +1,4 @@
-package com.mrkid.adblib;
+package com.cgutman.adblib;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -60,15 +60,14 @@ public class AdbStream implements Closeable {
 	/**
 	 * Called by the connection thread to send an OKAY packet, allowing the
 	 * other side to continue transmission.
-	 * @throws IOException If the connection fails while sending the packet
+	 * @throws java.io.IOException If the connection fails while sending the packet
 	 */
 	void sendReady() throws IOException
 	{
 		/* Generate and send a READY packet */
-		AdbProtocol.AdbMessage packet = AdbProtocol.generateReady(localId, remoteId);
-		adbConn.channel.write(packet);
+        adbConn.channel.writex(AdbProtocol.generateReady(localId, remoteId));
 	}
-	
+
 	/**
 	 * Called by the connection thread to update the remote ID for this stream
 	 * @param remoteId New remote ID
@@ -77,7 +76,7 @@ public class AdbStream implements Closeable {
 	{
 		this.remoteId = remoteId;
 	}
-	
+
 	/**
 	 * Called by the connection thread to indicate the stream is okay to send data.
 	 */
@@ -85,7 +84,7 @@ public class AdbStream implements Closeable {
 	{
 		writeReady.set(true);
 	}
-	
+
 	/**
 	 * Called by the connection thread to notify that the stream was closed by the peer.
 	 */
@@ -93,92 +92,77 @@ public class AdbStream implements Closeable {
 	{
 		/* We don't call close() because it sends another CLOSE */
 		isClosed = true;
-		
+
 		/* Unwait readers and writers */
 		synchronized (this) {
-            ((Object)this).notifyAll();
+			notifyAll();
 		}
 		synchronized (readQueue) {
 			readQueue.notifyAll();
 		}
 	}
-	
+
 	/**
 	 * Reads a pending write payload from the other side.
 	 * @return Byte array containing the payload of the write
 	 * @throws InterruptedException If we are unable to wait for data
-	 * @throws IOException If the stream fails while waiting
+	 * @throws java.io.IOException If the stream fails while waiting
 	 */
 	public byte[] read() throws InterruptedException, IOException
 	{
 		byte[] data = null;
-		
+
 		synchronized (readQueue) {
 			/* Wait for the connection to close or data to be received */
 			while (!isClosed && (data = readQueue.poll()) == null) {
 				readQueue.wait();
 			}
-			
+
 			if (isClosed) {
 				throw new IOException("Stream closed");
 			}
 		}
-		
+
 		return data;
 	}
-	
+
 	/**
 	 * Sends a write packet with a given String payload.
 	 * @param payload Payload in the form of a String
-	 * @throws IOException If the stream fails while sending data
+	 * @throws java.io.IOException If the stream fails while sending data
 	 * @throws InterruptedException If we are unable to wait to send data
 	 */
 	public void write(String payload) throws IOException, InterruptedException
 	{
 		/* ADB needs null-terminated strings */
-		write(payload.getBytes("UTF-8"), false);
-		write(new byte[]{0}, true);
+		write((payload + "\0").getBytes("UTF-8"));
 	}
-	
+
 	/**
 	 * Sends a write packet with a given byte array payload.
 	 * @param payload Payload in the form of a byte array
-	 * @throws IOException If the stream fails while sending data
+	 * @throws java.io.IOException If the stream fails while sending data
 	 * @throws InterruptedException If we are unable to wait to send data
 	 */
 	public void write(byte[] payload) throws IOException, InterruptedException
 	{
-		write(payload, true);
-	}
-	
-	/**
-	 * Queues a write packet and optionally sends it immediately.
-	 * @param payload Payload in the form of a byte array
-	 * @param flush Specifies whether to send the packet immediately
-	 * @throws IOException If the stream fails while sending data
-	 * @throws InterruptedException If we are unable to wait to send data
-	 */
-	public void write(byte[] payload, boolean flush) throws IOException, InterruptedException
-	{
-		synchronized (this) {
+        synchronized (this) {
 			/* Make sure we're ready for a write */
-			while (!isClosed && !writeReady.compareAndSet(true, false))
-                ((Object)this).wait();
-			
-			if (isClosed) {
-				throw new IOException("Stream closed");
-			}
-		}
-		
+            while (!isClosed && !writeReady.compareAndSet(true, false))
+                wait();
+
+            if (isClosed) {
+                throw new IOException("Stream closed");
+            }
+        }
+
 		/* Generate a WRITE packet and send it */
-		AdbProtocol.AdbMessage packet = AdbProtocol.generateWrite(localId, remoteId, payload);
-		adbConn.channel.write(packet);
-		
+        adbConn.channel.writex(AdbProtocol.generateWrite(localId, remoteId, payload));
 	}
 
 	/**
 	 * Closes the stream. This sends a close message to the peer.
-	 * @throws IOException If the stream fails while sending the close message.
+	 * @throws java.io.IOException If the stream fails while sending the close message.
 	 */
 	@Override
 	public void close() throws IOException {
@@ -190,9 +174,8 @@ public class AdbStream implements Closeable {
 			/* Notify readers/writers that we've closed */
 			notifyClose();
 		}
-		
-		AdbProtocol.AdbMessage packet = AdbProtocol.generateClose(localId, remoteId);
-		adbConn.channel.write(packet);
+
+        adbConn.channel.writex(AdbProtocol.generateClose(localId, remoteId));
 	}
 
 	/**

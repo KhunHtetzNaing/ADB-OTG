@@ -1,25 +1,27 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.0.1'
+    compileSdkVersion 22
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
-        minSdkVersion 18
-        targetSdkVersion 19
+        applicationId "mrkid.com.myflashbot"
+        minSdkVersion 14
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.+'
-    compile 'com.android.support:appcompat-v7:19.0.+'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:22.2.1'
     compile project(':adblib')
 }

@@ -1,4 +1,4 @@
-package com.wandoujia.flashbot;
+package com.mrkid.flashbot;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

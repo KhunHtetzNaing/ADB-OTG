@@ -1,4 +1,4 @@
-package com.wandoujia.flashbot;
+package com.mrkid.flashbot;
 
 /**
  * Created by xudong on 2/7/14.

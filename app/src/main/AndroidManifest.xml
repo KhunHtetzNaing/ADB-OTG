@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wandoujia.flashbot" >
+    package="com.mrkid.flashbot" >
 
     <uses-feature android:name="android.hardware.usb.host" />
 
@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.wandoujia.flashbot.MainActivity"
+            android:name="com.mrkid.flashbot.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
@@ -32,7 +32,7 @@
                 android:resource="@xml/device_filter" />
         </activity>
         <activity
-            android:name="com.wandoujia.flashbot.SettingActivity"
+            android:name="com.mrkid.flashbot.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light">
         </activity>

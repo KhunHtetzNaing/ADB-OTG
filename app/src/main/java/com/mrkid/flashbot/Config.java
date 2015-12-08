@@ -1,4 +1,4 @@
-package com.wandoujia.flashbot;
+package com.mrkid.flashbot;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,13 +6,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.preference.PreferenceManager;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 

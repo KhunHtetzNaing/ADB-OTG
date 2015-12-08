@@ -1,4 +1,4 @@
-package com.wandoujia.flashbot;
+package com.mrkid.flashbot;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,11 +34,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import static com.wandoujia.flashbot.Message.CONNECTING;
-import static com.wandoujia.flashbot.Message.DEVICE_FOUND;
-import static com.wandoujia.flashbot.Message.DEVICE_NOT_FOUND;
-import static com.wandoujia.flashbot.Message.FLASHING;
-import static com.wandoujia.flashbot.Message.INSTALLING_PROGRESS;
+import static com.mrkid.flashbot.Message.CONNECTING;
+import static com.mrkid.flashbot.Message.DEVICE_FOUND;
+import static com.mrkid.flashbot.Message.DEVICE_NOT_FOUND;
+import static com.mrkid.flashbot.Message.FLASHING;
+import static com.mrkid.flashbot.Message.INSTALLING_PROGRESS;
 
 public class MainActivity extends ActionBarActivity {
 

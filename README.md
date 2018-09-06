@@ -18,20 +18,20 @@
        *  目前在移动/联通营业厅里的部分刷机厂商就是使用这个方案的，他们一般手持一个支持otg的android pad，这个设备都是已经root过的，采用上述方案给你的手机来安装相应运营商的助手或其他软件。
        *  缺点: 要求**root**，这个是个硬伤，root对普通人既复杂也有安全隐患。
        
-   *    完美方案
-       *    android的api实际上提供了底层设备的api，如果是通过相应api进行调用，系统是允许的，最多会自动弹出一个授权框，确认一下即可。
-       *    那么目标就很清楚了，用android支持的api重写adb，这样就可以运行`adb install`而没有权限问题。部分的底层工作可以在github中已有实现，参见[cgutman的adblib](https://github.com/cgutman/AdbLib/tree/master/src/com/cgutman/adblib)。
-       *    对上述的代码进行修改，在cgutman的adblib中，数据都是通过Socket进行交互的，将其抽象为AdbChannel，并将原来的Socket实现修改为TcpChannel，并编写UsbChannel(其内部使用UsbDeviceConnection，UsbEndpoint，UsbInterface等标准api)。
-       *    然后参照adb的数据格式，实现`adb push`和`adb install`命令。
-       *    最后套个app外壳，整个工作就完成了。
-       *    工作流程:
-         *    目标机D上打开adb选项(国内用户用过电脑助手的基本都会，请自行搜索)
-         *    宿主机H和目标机D通过OTG线连接
-         *    目标机D上可能会弹出提示，大意为是否信任宿主机H等等，确认。(这个过程同电脑连接android手机一模一样)。
-         *    宿主机H可以选择自己机子上
-           *    已安装的apk(apk安装后如果不做特意清理的话，原始的apk事实上也是保留在系统目录的某个地方)，
-           *    sdcard上的其他apk文件
+   * 完美方案   
+     * android的api实际上提供了底层设备的api，如果是通过相应api进行调用，系统是允许的，最多会自动弹出一个授权框，确认一下即可。
+     * 那么目标就很清楚了，用android支持的api重写adb，这样就可以运行`adb install`而没有权限问题。部分的底层工作可以在github中已有实现，参见[cgutman的adblib](https://github.com/cgutman/AdbLib/tree/master/src/com/cgutman/adblib)。
+     * 对上述的代码进行修改，在cgutman的adblib中，数据都是通过Socket进行交互的，将其抽象为AdbChannel，并将原来的Socket实现修改为TcpChannel，并编写UsbChannel(其内部使用UsbDeviceConnection，UsbEndpoint，UsbInterface等标准api)。
+     * 然后参照adb的数据格式，实现`adb push`和`adb install`命令。
+     * 最后套个app外壳，整个工作就完成了。
+     * 工作流程:
+          * 目标机D上打开adb选项(国内用户用过电脑助手的基本都会，请自行搜索)
+          * 宿主机H和目标机D通过OTG线连接
+          * 目标机D上可能会弹出提示，大意为是否信任宿主机H等等，确认。(这个过程同电脑连接android手机一模一样)。
+          * 宿主机H可以选择自己机子上
+          * 已安装的apk(apk安装后如果不做特意清理的话，原始的apk事实上也是保留在系统目录的某个地方)，
+          * sdcard上的其他apk文件
            
            安装到目标机D上了(实际上就是调用改写过`adb push`和`adb install`)，大功告成。      
-        * [视频效果在此](http://v.youku.com/v_show/id_XNjg3MzAxOTQ4.html?from=s1.8-1-1.2)
-        * 优点: 仅要求支持OTG,不需要root。一根5块钱的otg线就可以解决商贩零散刷机或偶尔共享的需求，物超所值。
+     * [视频效果在此](http://v.youku.com/v_show/id_XNjg3MzAxOTQ4.html?from=s1.8-1-1.2)
+     * 优点: 仅要求支持OTG,不需要root。一根5块钱的otg线就可以解决商贩零散刷机或偶尔共享的需求，物超所值。

@@ -1,9 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.wandoujia.flashbot.SettingActivity" >
-    
-    <item android:id="@+id/save_settings"
-        android:title="Save"
-        app:showAsAction="always|withText"/>
-</menu>

@@ -108,21 +108,19 @@ public class AdbStream implements Closeable {
 	 * @throws InterruptedException If we are unable to wait for data
 	 * @throws java.io.IOException If the stream fails while waiting
 	 */
-	public byte[] read() throws InterruptedException, IOException
-	{
+	public byte[] read() throws InterruptedException, IOException {
 		byte[] data = null;
-
 		synchronized (readQueue) {
 			/* Wait for the connection to close or data to be received */
 			while (!isClosed && (data = readQueue.poll()) == null) {
 				readQueue.wait();
 			}
 
+
 			if (isClosed) {
 				throw new IOException("Stream closed");
 			}
 		}
-
 		return data;
 	}
 
@@ -132,8 +130,7 @@ public class AdbStream implements Closeable {
 	 * @throws java.io.IOException If the stream fails while sending data
 	 * @throws InterruptedException If we are unable to wait to send data
 	 */
-	public void write(String payload) throws IOException, InterruptedException
-	{
+	public void write(String payload) throws IOException, InterruptedException {
 		/* ADB needs null-terminated strings */
 		write((payload + "\0").getBytes("UTF-8"));
 	}

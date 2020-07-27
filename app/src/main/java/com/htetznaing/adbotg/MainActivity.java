@@ -225,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     private void waitingDialog(){
         closeWaiting();
         waitingDialog = SpinnerDialog.displayDialog(this, "IMPORTANT ⚡",
-                "Please make sure the target device has network ADB enabled.\n\n"+
                         "You may need to accept a prompt on the target device if you are connecting "+
                         "to it for the first time from this device.", false);
     }

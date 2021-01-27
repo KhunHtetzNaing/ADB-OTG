@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ADB⚡OTG</string>
+
+    <string name="waiting_device">等待设备中</string>
+    <string name="ready_flash_apks">准备好刷入 Apk 了</string>
+    <string name="flashing_apks">正在刷入 Apk</string>
+    <string name="connecting">正在连接...</string>
+    <string name="connecting_hint">在目标设备上确认授权</string>
+    <string name="setup_hint">安装 Apks</string>
+    <string name="flash_emoji">⚡</string>
+    <string name="title_activity_setting">安装 Apks</string>
+    <string name="adb_device_not_connected">ADB 设备处于未连接状态。</string>
+    <string name="adb_device_connected">ADB 设备已连接</string>
+    <string name="adb_device_waiting">正在等待 ADB 设备</string>
+    <string name="how_to_connect_phone_to_phone">如何将两部手机相连？</string>
+    <string name="guide_to_connect"><![CDATA[1.在远程设备上启用开发者选项和远程调试。\n2.使用 OTG 连接远程设备]]></string>
+    <string name="guide_for_dev_option"><![CDATA[多数安卓设备\n===================\n要启用开发者选项，::轻按版本号选项七次。\n\nAndroid 9 及以上系统： \n设置 > 关于手机 > 版本号\n\nAndroid 8.0.0 和 Android 8.1.0 : \n设置 > 系统 > 关于手机 > 版本号\n\nAndroid 7.1 及以下系统：\n设置 > 关于手机 > 版本号\n=============================\n\n小米手机 (MIUI)\n===================\n要启用开发者选项，::轻按 MIUI 版本选项七次。\n\nMIUI 11 及以上：\n设置 > 我的设备 > 所有选项 > MIUI 版本\n\nMIUI 10 及以下： \n设置 > 关于手机 > MIUI 版本\n=============================\n\n三星手机\n===================\n转到 \"设置\"，接着::轻按 \"关于设备\" 或 \"关于手机\".\n取决于你的设备和操作系统， \n你或许需要::轻按 \"软件信息\"， \n接着按 \"版本号\" 七次。\n=============================\n\nVivo 手机\n===================\n转到 \"设置 > 更多设置 > 关于手机\"， \n接着::轻按 \"版本号\" 七次。\n=============================\n\nOppo & Realme 手机\n===================\n转到 “设置” – “关于手机” ，接着::轻按 \"版本\" 七次。\n=============================\n\n华为手机\n===================\n转到 \"设置 > 关于手机\"，接着轻按 \"版本号\" 七次。\n=============================]]></string>
+
+</resources>

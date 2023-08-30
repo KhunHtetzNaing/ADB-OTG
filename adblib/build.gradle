@@ -1,14 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 34
     }
     buildTypes {
         release {
@@ -16,10 +13,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.cgutman.adblib'
 }
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.13'
-    api 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.13.2'
 }

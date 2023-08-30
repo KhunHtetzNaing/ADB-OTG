@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adblib/adblib.iml" filepath="$PROJECT_DIR$/.idea/modules/adblib/adblib.iml" group="flashbot/adblib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="flashbot/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/flashbot.iml" filepath="$PROJECT_DIR$/.idea/modules/flashbot.iml" group="flashbot" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ADB-OTG.iml" filepath="$PROJECT_DIR$/.idea/modules/ADB-OTG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adblib/ADB-OTG.adblib.iml" filepath="$PROJECT_DIR$/.idea/modules/adblib/ADB-OTG.adblib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adblib/ADB-OTG.adblib.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/adblib/ADB-OTG.adblib.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adblib/ADB-OTG.adblib.main.iml" filepath="$PROJECT_DIR$/.idea/modules/adblib/ADB-OTG.adblib.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adblib/ADB-OTG.adblib.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/adblib/ADB-OTG.adblib.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ADB-OTG.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ADB-OTG.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ADB-OTG.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ADB-OTG.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ADB-OTG.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ADB-OTG.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ADB-OTG.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ADB-OTG.app.unitTest.iml" />
     </modules>
   </component>
 </project>

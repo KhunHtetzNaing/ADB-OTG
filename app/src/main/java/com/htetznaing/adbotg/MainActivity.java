@@ -1,6 +1,5 @@
 package com.htetznaing.adbotg;
 
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,9 +12,13 @@ import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -27,7 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,7 +44,6 @@ import com.htetznaing.adbotg.Adapter.SliderAdapterExample;
 import com.htetznaing.adbotg.Model.SliderItem;
 import com.htetznaing.adbotg.UI.SpinnerDialog;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
-import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -89,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         scrollView = findViewById(R.id.scrollView);
         mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
 
-        handler = new Handler() {
+        handler = new Handler(Looper.getMainLooper()) {
             @Override
-            public void handleMessage(android.os.Message msg) {
+            public void handleMessage(@NonNull android.os.Message msg) {
                 switch (msg.what) {
                     case DEVICE_FOUND:
                         closeWaiting();
@@ -152,7 +153,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         filter.addAction(Message.USB_PERMISSION);
-        registerReceiver(mUsbReceiver, filter);
+
+        ContextCompat.registerReceiver(this, mUsbReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
 
         //Check USB
         UsbDevice device = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
@@ -167,7 +169,12 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                 if (mManager.hasPermission(usbDevice)) { ;
                     asyncRefreshAdbConnection(usbDevice);
                 } else {
-                    mManager.requestPermission(usbDevice, PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(Message.USB_PERMISSION), 0));
+                    mManager.requestPermission(
+                            usbDevice,
+                            PendingIntent.getBroadcast(getApplicationContext(),
+                                    0,
+                                    new Intent(Message.USB_PERMISSION),
+                                    PendingIntent.FLAG_IMMUTABLE));
                 }
             }
         }
@@ -289,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                 if (mManager.hasPermission(usbDevice))
                     asyncRefreshAdbConnection(usbDevice);
                 else
-                    mManager.requestPermission(usbDevice,PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(Message.USB_PERMISSION), 0));
+                    mManager.requestPermission(usbDevice,PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(Message.USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE));
             }
         }
     };
@@ -436,7 +443,6 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                     String[] logSplit = log.split("\n");
                     logs.setText(logSplit[logSplit.length-1]);
                 }else if (cmd.equalsIgnoreCase("exit")) {
-                    onDestroy();
                     finish();
                 }else {
                     stream.write((cmd+"\n").getBytes("UTF-8"));
@@ -504,18 +510,6 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             return onEditorAction((TextView)v, EditorInfo.IME_ACTION_DONE, event);
         } else {
             return false;
-        }
-    }
-
-
-    private void test(){
-        File local = new File(Environment.getExternalStorageDirectory()+"/adm.apk");
-        String remotePath = "/sdcard/" + local.getName();
-        try {
-            new Push(adbConnection, local, remotePath).execute(handler);
-            new Install(adbConnection, remotePath, local.length() / 1024).execute(handler);
-        } catch (Exception e) {
-            Log.w(Const.TAG, "exception caught", e);
         }
     }
 }

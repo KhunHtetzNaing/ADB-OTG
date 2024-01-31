@@ -1,7 +1,8 @@
-package com.cgutman.adblib;
+package com.cgutman.adb;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,12 +16,12 @@ public class AdbStream implements Closeable {
     /**
      * The AdbConnection object that the stream communicates over
      */
-    private AdbConnection adbConn;
+    private final AdbConnection adbConn;
 
     /**
      * The local ID of the stream
      */
-    private int localId;
+    private final int localId;
 
     /**
      * The remote ID of the stream
@@ -30,12 +31,12 @@ public class AdbStream implements Closeable {
     /**
      * Indicates whether a write is currently allowed
      */
-    private AtomicBoolean writeReady;
+    private final AtomicBoolean writeReady;
 
     /**
      * A queue of data from the target's write packets
      */
-    private Queue<byte[]> readQueue;
+    private final Queue<byte[]> readQueue;
 
     /**
      * Indicates whether the connection is closed already
@@ -52,7 +53,7 @@ public class AdbStream implements Closeable {
     public AdbStream(AdbConnection adbConn, int localId) {
         this.adbConn = adbConn;
         this.localId = localId;
-        this.readQueue = new ConcurrentLinkedQueue<byte[]>();
+        this.readQueue = new ConcurrentLinkedQueue<>();
         this.writeReady = new AtomicBoolean(false);
         this.isClosed = false;
     }
@@ -143,7 +144,7 @@ public class AdbStream implements Closeable {
      */
     public void write(String payload) throws IOException, InterruptedException {
         /* ADB needs null-terminated strings */
-        write((payload + "\0").getBytes("UTF-8"));
+        write((payload + "\0").getBytes(StandardCharsets.UTF_8));
     }
 
     /**

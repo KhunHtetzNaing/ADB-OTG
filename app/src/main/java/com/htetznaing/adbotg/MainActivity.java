@@ -1,5 +1,11 @@
 package com.htetznaing.adbotg;
 
+import static com.htetznaing.adbotg.Message.CONNECTING;
+import static com.htetznaing.adbotg.Message.DEVICE_FOUND;
+import static com.htetznaing.adbotg.Message.DEVICE_NOT_FOUND;
+import static com.htetznaing.adbotg.Message.FLASHING;
+import static com.htetznaing.adbotg.Message.INSTALLING_PROGRESS;
+
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,11 +19,6 @@ import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -35,11 +36,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cgutman.adblib.AdbBase64;
-import com.cgutman.adblib.AdbConnection;
-import com.cgutman.adblib.AdbCrypto;
-import com.cgutman.adblib.AdbStream;
-import com.cgutman.adblib.UsbChannel;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.cgutman.adb.AdbBase64;
+import com.cgutman.adb.AdbConnection;
+import com.cgutman.adb.AdbCrypto;
+import com.cgutman.adb.AdbStream;
+import com.cgutman.adb.UsbChannel;
 import com.htetznaing.adbotg.Adapter.SliderAdapterExample;
 import com.htetznaing.adbotg.Model.SliderItem;
 import com.htetznaing.adbotg.UI.SpinnerDialog;
@@ -49,17 +54,12 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import static com.htetznaing.adbotg.Message.CONNECTING;
-import static com.htetznaing.adbotg.Message.DEVICE_FOUND;
-import static com.htetznaing.adbotg.Message.DEVICE_NOT_FOUND;
-import static com.htetznaing.adbotg.Message.FLASHING;
-import static com.htetznaing.adbotg.Message.INSTALLING_PROGRESS;
+import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener, View.OnKeyListener {
     private Handler handler;
     private UsbDevice mDevice;
-    private TextView tvStatus,logs;
+    private TextView tvStatus, logs;
     private ImageView usb_icon;
     private AdbCrypto adbCrypto;
     private AdbConnection adbConnection;
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     private boolean doubleBackToExitPressedOnce = false;
     private AdbStream stream;
     private SpinnerDialog waitingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             @Override
             public void handleMessage(@NonNull android.os.Message msg) {
                 switch (msg.what) {
-                    case DEVICE_FOUND:
+                    case DEVICE_FOUND -> {
                         closeWaiting();
                         tvStatus.setText(getString(R.string.adb_device_connected));
                         usb_icon.setColorFilter(Color.parseColor("#4CAF50"));
@@ -102,34 +103,27 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                         terminalView.setVisibility(View.VISIBLE);
                         initCommand();
                         showKeyboard();
-                        break;
-
-                    case CONNECTING:
+                    }
+                    case CONNECTING -> {
                         waitingDialog();
                         closeKeyboard();
                         tvStatus.setText(getString(R.string.waiting_device));
                         usb_icon.setColorFilter(Color.BLUE);
                         checkContainer.setVisibility(View.VISIBLE);
                         terminalView.setVisibility(View.GONE);
-                        break;
-
-                    case DEVICE_NOT_FOUND:
+                    }
+                    case DEVICE_NOT_FOUND -> {
                         closeWaiting();
                         closeKeyboard();
                         tvStatus.setText(getString(R.string.adb_device_not_connected));
                         usb_icon.setColorFilter(Color.RED);
                         checkContainer.setVisibility(View.VISIBLE);
                         terminalView.setVisibility(View.GONE);
-                        break;
-
-                    case FLASHING:
-                        Toast.makeText(MainActivity.this, "Flashing", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case INSTALLING_PROGRESS:
-                        Toast.makeText(MainActivity.this, "Progress", Toast.LENGTH_SHORT).show();
-                        break;
-
+                    }
+                    case FLASHING ->
+                            Toast.makeText(MainActivity.this, "Flashing", Toast.LENGTH_SHORT).show();
+                    case INSTALLING_PROGRESS ->
+                            Toast.makeText(MainActivity.this, "Progress", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -158,15 +152,15 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
         //Check USB
         UsbDevice device = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
-        if (device!=null) {
+        if (device != null) {
             System.out.println("From Intent!");
             asyncRefreshAdbConnection(device);
-        }else {
+        } else {
             System.out.println("From onCreate!");
             for (String k : mManager.getDeviceList().keySet()) {
                 UsbDevice usbDevice = mManager.getDeviceList().get(k);
                 handler.sendEmptyMessage(CONNECTING);
-                if (mManager.hasPermission(usbDevice)) { ;
+                if (mManager.hasPermission(usbDevice)) {
                     asyncRefreshAdbConnection(usbDevice);
                 } else {
                     mManager.requestPermission(
@@ -181,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
         //Slider
         sliderView = findViewById(R.id.imageSlider);
-        adapter = new SliderAdapterExample(this);
+        adapter = new SliderAdapterExample();
         sliderView.setSliderAdapter(adapter);
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -224,15 +218,15 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 //        }
     }
 
-    private void closeWaiting(){
-        if (waitingDialog!=null)
+    private void closeWaiting() {
+        if (waitingDialog != null)
             waitingDialog.dismiss();
     }
 
-    private void waitingDialog(){
+    private void waitingDialog() {
         closeWaiting();
         waitingDialog = SpinnerDialog.displayDialog(this, "IMPORTANT ⚡",
-                        "You may need to accept a prompt on the target device if you are connecting "+
+                "You may need to accept a prompt on the target device if you are connecting " +
                         "to it for the first time from this device.", false);
     }
 
@@ -245,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.go_to_github){
+        if (item.getItemId() == R.id.go_to_github) {
             startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://github.com/KhunHtetzNaing/ADB-OTG")));
         }
         return super.onOptionsItemSelected(item);
@@ -277,10 +271,10 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Log.d(Const.TAG, "mUsbReceiver onReceive => "+action);
+            Log.d(Const.TAG, "mUsbReceiver onReceive => " + action);
             if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
                 UsbDevice device = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                String deviceName = device.getDeviceName();
+                String deviceName = device != null ? device.getDeviceName() : null;
                 if (mDevice != null && mDevice.getDeviceName().equals(deviceName)) {
                     try {
                         Log.d(Const.TAG, "setAdbInterface(null, null)");
@@ -289,14 +283,14 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                         Log.w(Const.TAG, "setAdbInterface(null,null) failed", e);
                     }
                 }
-            }else if (Message.USB_PERMISSION.equals(action)){
+            } else if (Message.USB_PERMISSION.equals(action)) {
                 System.out.println("From receiver!");
                 UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
                 handler.sendEmptyMessage(CONNECTING);
                 if (mManager.hasPermission(usbDevice))
                     asyncRefreshAdbConnection(usbDevice);
                 else
-                    mManager.requestPermission(usbDevice,PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(Message.USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE));
+                    mManager.requestPermission(usbDevice, PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(Message.USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE));
             }
         }
     };
@@ -367,109 +361,81 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
     }
 
-    private void initCommand(){
+    private void initCommand() {
         // Open the shell stream of ADB
         logs.setText("");
         try {
             stream = adbConnection.open("shell:");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;
         }
 
         // Start the receiving thread
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!stream.isClosed()) {
-                    try {
-                        // Print each thing we read from the shell stream
-                        final String[] output = {new String(stream.read(), "US-ASCII")};
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (user == null) {
-                                    user = output[0].substring(0,output[0].lastIndexOf("/")+1);
-                                }else if (output[0].contains(user)){
-                                    System.out.println("End => "+user);
-                                }
+        new Thread(() -> {
+            while (!stream.isClosed()) {
+                try {
+                    // Print each thing we read from the shell stream
+                    final String[] output = {new String(stream.read(), StandardCharsets.US_ASCII)};
+                    runOnUiThread(() -> {
+                        if (user == null) {
+                            user = output[0].substring(0, output[0].lastIndexOf("/") + 1);
+                        } else if (output[0].contains(user)) {
+                            System.out.println("End => " + user);
+                        }
 
-                                logs.append(output[0]);
+                        logs.append(output[0]);
 
-                                scrollView.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                                        edCommand.requestFocus();
-                                    }
-                                });
-                            }
+                        scrollView.post(() -> {
+                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                            edCommand.requestFocus();
                         });
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        return;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        return;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return;
-                    }
+                    });
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                    return;
                 }
             }
         }).start();
 
-        btnRun.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                putCommand();
-            }
-        });
+        btnRun.setOnClickListener(v -> putCommand());
     }
 
     private void putCommand() {
-        if (!edCommand.getText().toString().isEmpty()){
+        if (!edCommand.getText().toString().isEmpty()) {
             // We become the sending thread
             try {
                 String cmd = edCommand.getText().toString();
                 if (cmd.equalsIgnoreCase("clear")) {
                     String log = logs.getText().toString();
                     String[] logSplit = log.split("\n");
-                    logs.setText(logSplit[logSplit.length-1]);
-                }else if (cmd.equalsIgnoreCase("exit")) {
+                    logs.setText(logSplit[logSplit.length - 1]);
+                } else if (cmd.equalsIgnoreCase("exit")) {
                     finish();
-                }else {
-                    stream.write((cmd+"\n").getBytes("UTF-8"));
+                } else {
+                    stream.write((cmd + "\n").getBytes(StandardCharsets.UTF_8));
                 }
                 edCommand.setText("");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
-        }else Toast.makeText(MainActivity.this, "No command", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(MainActivity.this, "No command", Toast.LENGTH_SHORT).show();
     }
 
     public void open(View view) {
 
     }
 
-    public void showKeyboard(){
+    public void showKeyboard() {
         edCommand.requestFocus();
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    public void closeKeyboard(){
+    public void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
@@ -484,13 +450,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
     @Override
@@ -507,7 +467,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             /* Just call the onEditorAction function to handle this for us */
-            return onEditorAction((TextView)v, EditorInfo.IME_ACTION_DONE, event);
+            return onEditorAction((TextView) v, EditorInfo.IME_ACTION_DONE, event);
         } else {
             return false;
         }

@@ -3,8 +3,8 @@ package com.htetznaing.adbotg;
 import android.os.Handler;
 import android.util.Log;
 
-import com.cgutman.adblib.AdbConnection;
-import com.cgutman.adblib.AdbStream;
+import com.cgutman.adb.AdbConnection;
+import com.cgutman.adb.AdbStream;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,9 +16,9 @@ import java.io.InputStream;
  */
 public class Push {
 
-    private AdbConnection adbConnection;
-    private File local;
-    private String remotePath;
+    private final AdbConnection adbConnection;
+    private final File local;
+    private final String remotePath;
 
     public Push(AdbConnection adbConnection, File local, String remotePath) {
         this.adbConnection = adbConnection;
@@ -27,19 +27,15 @@ public class Push {
     }
 
     public void execute(Handler handler) throws InterruptedException, IOException {
-
         AdbStream stream = adbConnection.open("sync:");
 
         String sendId = "SEND";
-
         String mode = ",33206";
 
         int length = (remotePath + mode).length();
 
         stream.write(ByteUtils.concat(sendId.getBytes(), ByteUtils.intToByteArray(length)));
-
         stream.write(remotePath.getBytes());
-
         stream.write(mode.getBytes());
 
         byte[] buff = new byte[adbConnection.getMaxData()];

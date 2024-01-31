@@ -1,4 +1,4 @@
-package com.cgutman.adblib;
+package com.cgutman.adb;
 
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDeviceConnection;
@@ -22,7 +22,7 @@ public class UsbChannel implements AdbChannel {
 
     private final int defaultTimeout = 1000;
 
-    private final LinkedList<UsbRequest> mInRequestPool = new LinkedList<UsbRequest>();
+    private final LinkedList<UsbRequest> mInRequestPool = new LinkedList<>();
 
     // return an IN request to the pool
     public void releaseInRequest(UsbRequest request) {
@@ -100,7 +100,7 @@ public class UsbChannel implements AdbChannel {
     // A dirty solution, only API level 12 is needed, not 18
     private void writex(byte[] buffer) throws IOException {
         int offset = 0;
-        int transferred = 0;
+        int transferred;
 
         byte[] tmp = new byte[buffer.length];
         System.arraycopy(buffer, 0, tmp, 0, buffer.length);

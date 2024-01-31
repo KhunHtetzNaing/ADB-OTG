@@ -4,8 +4,4 @@
         class="255"
         protocol="1"
         subclass="66" />
-    <usb-device
-        class="255"
-        protocol="3"
-        subclass="66" />
 </resources>

@@ -1,4 +1,4 @@
-package com.cgutman.adblib;
+package com.cgutman.adb;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class AdbConnection implements Closeable {
     /**
      * The backend thread that handles responding to ADB packets.
      */
-    private Thread connectionThread;
+    private final Thread connectionThread;
 
     /**
      * Specifies whether a connect has been attempted
@@ -54,7 +54,7 @@ public class AdbConnection implements Closeable {
     /**
      * A hash map of our open streams indexed by local ID.
      **/
-    private HashMap<Integer, AdbStream> openStreams;
+    private final HashMap<Integer, AdbStream> openStreams;
 
     /**
      * Internal constructor to initialize some internal state

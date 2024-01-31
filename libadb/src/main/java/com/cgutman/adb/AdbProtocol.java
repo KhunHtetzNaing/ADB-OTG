@@ -1,8 +1,9 @@
-package com.cgutman.adblib;
+package com.cgutman.adb;
 
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This class provides useful functions and fields for ADB protocol details.
@@ -39,10 +40,7 @@ public class AdbProtocol {
     public static byte[] CONNECT_PAYLOAD;
 
     static {
-        try {
-            CONNECT_PAYLOAD = "host::\0".getBytes("UTF-8");
-        } catch (UnsupportedEncodingException ignored) {
-        }
+        CONNECT_PAYLOAD = "host::\0".getBytes(StandardCharsets.UTF_8);
     }
 
     /**
@@ -160,7 +158,7 @@ public class AdbProtocol {
      */
     public static AdbMessage generateOpen(int localId, String dest) throws UnsupportedEncodingException {
         ByteBuffer bbuf = ByteBuffer.allocate(dest.length() + 1);
-        bbuf.put(dest.getBytes("UTF-8"));
+        bbuf.put(dest.getBytes(StandardCharsets.UTF_8));
         bbuf.put((byte) 0);
         return generateMessage(CMD_OPEN, localId, 0, bbuf.array());
     }

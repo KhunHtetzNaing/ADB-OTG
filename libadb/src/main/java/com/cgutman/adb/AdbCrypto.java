@@ -1,4 +1,4 @@
-package com.cgutman.adblib;
+package com.cgutman.adb;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -119,9 +120,9 @@ public class AdbCrypto {
         rem = n.remainder(r32);
         n0inv = rem.modInverse(r32);
 
-        int myN[] = new int[KEY_LENGTH_WORDS];
-        int myRr[] = new int[KEY_LENGTH_WORDS];
-        BigInteger res[];
+        int[] myN = new int[KEY_LENGTH_WORDS];
+        int[] myRr = new int[KEY_LENGTH_WORDS];
+        BigInteger[] res;
         for (int i = 0; i < KEY_LENGTH_WORDS; i++) {
             res = rr.divideAndRemainder(r32);
             rr = res[0];
@@ -240,7 +241,7 @@ public class AdbCrypto {
         keyString.append(" unknown@unknown");
         keyString.append('\0');
 
-        return keyString.toString().getBytes("UTF-8");
+        return keyString.toString().getBytes(StandardCharsets.UTF_8);
     }
 
     /**

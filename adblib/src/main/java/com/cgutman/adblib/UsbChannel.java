@@ -15,7 +15,6 @@ import java.util.LinkedList;
  * Created by xudong on 2/21/14.
  */
 public class UsbChannel implements AdbChannel {
-
     private final UsbDeviceConnection mDeviceConnection;
     private final UsbEndpoint mEndpointOut;
     private final UsbEndpoint mEndpointIn;
@@ -32,7 +31,6 @@ public class UsbChannel implements AdbChannel {
         }
     }
 
-
     // get an IN request from the pool
     public UsbRequest getInRequest() {
         synchronized (mInRequestPool) {
@@ -46,10 +44,8 @@ public class UsbChannel implements AdbChannel {
         }
     }
 
-
     @Override
     public void readx(byte[] buffer, int length) throws IOException {
-
         UsbRequest usbRequest = getInRequest();
 
         ByteBuffer expected = ByteBuffer.allocate(length).order(ByteOrder.LITTLE_ENDIAN);
@@ -102,8 +98,7 @@ public class UsbChannel implements AdbChannel {
 //    }
 
     // A dirty solution, only API level 12 is needed, not 18
-    private void writex(byte[] buffer) throws IOException{
-
+    private void writex(byte[] buffer) throws IOException {
         int offset = 0;
         int transferred = 0;
 
@@ -132,7 +127,6 @@ public class UsbChannel implements AdbChannel {
             writex(message.getPayload());
         }
     }
-
 
     @Override
     public void close() throws IOException {
@@ -163,5 +157,4 @@ public class UsbChannel implements AdbChannel {
         mEndpointOut = epOut;
         mEndpointIn = epIn;
     }
-
 }

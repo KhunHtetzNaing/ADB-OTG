@@ -10,11 +10,12 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:exported="true"
             android:name=".MainActivity"
+            android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -28,9 +29,9 @@
                 android:resource="@xml/device_filter" />
         </activity>
 
-        <receiver android:name=".UsbReceiver"
+        <receiver
+            android:name=".UsbReceiver"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
@@ -46,7 +47,6 @@
             <meta-data
                 android:name="android.hardware.usb.action.USB_STATE"
                 android:resource="@xml/device_filter" />
-
         </receiver>
     </application>
 

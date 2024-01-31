@@ -9,8 +9,9 @@ import java.net.Socket;
  * Created by xudong on 2/21/14.
  */
 public class TcpChannel implements AdbChannel {
-
-    /** The underlying socket that this class uses to communicate with the target device. */
+    /**
+     * The underlying socket that this class uses to communicate with the target device.
+     */
     private Socket socket;
 
     /**
@@ -22,7 +23,6 @@ public class TcpChannel implements AdbChannel {
      * The output stream that this class uses to read from the socket.
      */
     private OutputStream outputStream;
-
 
     @Override
     public void readx(byte[] buffer, int length) throws IOException {
@@ -65,8 +65,6 @@ public class TcpChannel implements AdbChannel {
             this.socket = socket;
             this.inputStream = socket.getInputStream();
             this.outputStream = socket.getOutputStream();
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

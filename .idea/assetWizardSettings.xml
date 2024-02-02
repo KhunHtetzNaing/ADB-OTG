@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/g9/wwbvdmzs7hsglxyjhqnztls40000gn/T/ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\ROHITV~1\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -68,18 +68,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/g9/wwbvdmzs7hsglxyjhqnztls40000gn/T/baseline_adb_24.xml" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                      <entry key="foregroundClipartAsset">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/adb/baseline_adb_24.xml" />
+                                                <entry key="imagePath" value="C:\Users\ROHITV~1\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -91,6 +80,9 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="imagePath" value="D:\bitmap.svg" />
+                                                <entry key="scalingPercent" value="70" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -122,7 +114,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundAssetType" value="CLIP_ART" />
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="3f51b5" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -139,7 +132,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/g9/wwbvdmzs7hsglxyjhqnztls40000gn/T/ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\ROHITV~1\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -183,7 +176,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/g9/wwbvdmzs7hsglxyjhqnztls40000gn/T/ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\ROHITV~1\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -247,7 +240,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="imagePath" value="/private/var/folders/g9/wwbvdmzs7hsglxyjhqnztls40000gn/T/ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\ROHITV~1\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>

@@ -101,24 +101,33 @@
             android:id="@+id/runContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/btnRun"
+                style="?materialButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
                 android:text="Run" />
 
-            <EditText
-                android:id="@+id/edCommand"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cmd_input_lyt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/btnRun"
-                android:hint="type command"
-                android:importantForAutofill="no"
-                android:inputType="text" />
+                android:layout_toStartOf="@id/btnRun">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edCommand"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Type command"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
         <ScrollView
@@ -126,7 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/runContainer"
-            android:background="@android:color/black">
+            android:fillViewport="true">
 
             <TextView
                 android:id="@+id/logs"
@@ -135,7 +144,7 @@
                 android:focusable="true"
                 android:longClickable="true"
                 android:padding="10dp"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="?android:textColorPrimary"
                 android:textIsSelectable="true" />
         </ScrollView>
     </RelativeLayout>

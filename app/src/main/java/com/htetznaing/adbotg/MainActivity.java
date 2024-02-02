@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,6 +43,8 @@ import com.cgutman.adb.AdbConnection;
 import com.cgutman.adb.AdbStream;
 import com.cgutman.adb.UsbChannel;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import com.htetznaing.adbotg.Adapter.SliderAdapterExample;
 import com.htetznaing.adbotg.Model.SliderItem;
 import com.htetznaing.adbotg.UI.SpinnerDialog;
@@ -56,23 +57,24 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener, View.OnKeyListener {
-    private Handler handler;
-    private UsbDevice mDevice;
     private TextView tvStatus, logs;
     private ImageView usb_icon;
-    private AdbConnection adbConnection;
-    private UsbManager mManager;
     private RelativeLayout terminalView;
     private LinearLayout checkContainer;
-    private EditText edCommand;
+    private TextInputEditText edCommand;
     private Button btnRun;
     private ScrollView scrollView;
-    private String user = null;
     private SliderAdapterExample adapter;
     private SliderView sliderView;
     private boolean doubleBackToExitPressedOnce = false;
-    private AdbStream stream;
     private SpinnerDialog waitingDialog;
+
+    private String user = null;
+    private Handler handler;
+    private UsbDevice mDevice;
+    private AdbConnection adbConnection;
+    private UsbManager mManager;
+    private AdbStream stream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         edCommand = findViewById(R.id.edCommand);
         btnRun = findViewById(R.id.btnRun);
         scrollView = findViewById(R.id.scrollView);
+
         mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
 
         handler = new Handler(Looper.getMainLooper()) {

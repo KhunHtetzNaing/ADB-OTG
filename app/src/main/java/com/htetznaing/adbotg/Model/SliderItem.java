@@ -1,6 +1,6 @@
 package com.htetznaing.adbotg.Model;
-public class SliderItem {
 
+public class SliderItem {
     private String description;
     private int imageUrl;
 

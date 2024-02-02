@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.usb.host" />
 
     <application
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AdbOtg"
+        tools:ignore="UnusedAttribute"
+        tools:targetApi="31">
         <activity
-            android:exported="true"
             android:name=".MainActivity"
-            android:launchMode="singleTask">
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AdbOtg"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -28,9 +37,9 @@
                 android:resource="@xml/device_filter" />
         </activity>
 
-        <receiver android:name=".UsbReceiver"
+        <receiver
+            android:name=".UsbReceiver"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
@@ -46,7 +55,6 @@
             <meta-data
                 android:name="android.hardware.usb.action.USB_STATE"
                 android:resource="@xml/device_filter" />
-
         </receiver>
     </application>
 

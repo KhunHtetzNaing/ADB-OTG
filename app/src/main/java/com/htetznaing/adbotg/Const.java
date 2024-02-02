@@ -5,5 +5,4 @@ package com.htetznaing.adbotg;
  */
 public class Const {
     public static final String TAG = "flashbot";
-    public static final double PUSH_PERCENT = 0.5;
 }

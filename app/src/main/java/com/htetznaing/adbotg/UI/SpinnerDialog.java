@@ -1,22 +1,22 @@
 package com.htetznaing.adbotg.UI;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 
-public class SpinnerDialog implements Runnable,OnCancelListener {
-    private String title, message;
-    private Activity activity;
+import java.util.ArrayList;
+
+public class SpinnerDialog implements Runnable, OnCancelListener {
+    private final String title;
+    private final String message;
+    private final Activity activity;
     private ProgressDialog progress;
-    private boolean finish;
+    private final boolean finish;
 
-    private static ArrayList<SpinnerDialog> rundownDialogs = new ArrayList<SpinnerDialog>();
+    private static final ArrayList<SpinnerDialog> rundownDialogs = new ArrayList<>();
 
-    public SpinnerDialog(Activity activity, String title, String message, boolean finish)
-    {
+    public SpinnerDialog(Activity activity, String title, String message, boolean finish) {
         this.activity = activity;
         this.title = title;
         this.message = message;
@@ -24,32 +24,27 @@ public class SpinnerDialog implements Runnable,OnCancelListener {
         this.finish = finish;
     }
 
-    public static SpinnerDialog displayDialog(Activity activity, String title, String message, boolean finish)
-    {
+    public static SpinnerDialog displayDialog(Activity activity, String title, String message, boolean finish) {
         SpinnerDialog spinner = new SpinnerDialog(activity, title, message, finish);
         activity.runOnUiThread(spinner);
         return spinner;
     }
 
-    public static void closeDialogs()
-    {
+    public static void closeDialogs() {
         for (SpinnerDialog d : rundownDialogs)
             d.progress.dismiss();
 
         rundownDialogs.clear();
     }
 
-    public void dismiss()
-    {
+    public void dismiss() {
         // Running again with progress != null will destroy it
         activity.runOnUiThread(this);
     }
 
     @Override
     public void run() {
-
-        if (progress == null)
-        {
+        if (progress == null) {
             // If we're dying, don't bother creating a dialog
             if (activity.isFinishing())
                 return;
@@ -62,20 +57,15 @@ public class SpinnerDialog implements Runnable,OnCancelListener {
             progress.setOnCancelListener(this);
 
             // If we want to finish the activity when this is killed, make it cancellable
-            if (finish)
-            {
+            if (finish) {
                 progress.setCancelable(true);
                 progress.setCanceledOnTouchOutside(false);
-            }
-            else
-            {
+            } else {
                 progress.setCancelable(false);
             }
 
             progress.show();
-        }
-        else
-        {
+        } else {
             progress.dismiss();
         }
     }

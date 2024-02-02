@@ -1,21 +1,21 @@
 package com.htetznaing.adbotg;
 
-
 import android.os.Handler;
 import android.util.Log;
-import com.cgutman.adblib.AdbConnection;
-import com.cgutman.adblib.AdbStream;
+
+import com.cgutman.adb.AdbConnection;
+import com.cgutman.adb.AdbStream;
+
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by xudong on 2/25/14.
  */
-
 public class Install {
-    private AdbConnection adbConnection;
-    private String remotePath;
-    private long installTimeAssumption = 0;
+    private final AdbConnection adbConnection;
+    private final String remotePath;
+    private final long installTimeAssumption;
 
     public Install(AdbConnection adbConnection, String remotePath, long installTimeAssumption) {
         this.adbConnection = adbConnection;
@@ -39,7 +39,7 @@ public class Install {
                         if (percent < 95) {
                             percent += 1;
                             try {
-                                Thread.sleep(installTimeAssumption/100);
+                                Thread.sleep(installTimeAssumption / 100);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }

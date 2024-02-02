@@ -1,0 +1,37 @@
+[versions]
+agp = "8.2.2"
+kotlin = "1.9.22"
+materialthemebuilder = "1.4.1"
+core-ktx = "1.12.0"
+appcompat = "1.6.1"
+material = "1.11.0"
+constraintlayout = "2.1.4"
+autoimageslider = "1.3.9"
+glide = "4.15.1"
+glide-compiler = "4.13.0"
+#noinspection GradleDependency
+boringssl = "2.1"
+cxx = "1.2.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+
+[libraries]
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+autoimageslider = { module = "com.github.smarteist:autoimageslider", version.ref = "autoimageslider" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide-compiler" }
+boringssl = { module = "io.github.vvb2060.ndk:boringssl", version.ref = "boringssl" }
+cxx = { module = "dev.rikka.ndk.thirdparty:cxx", version.ref = "cxx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
+[plugins]
+application = { id = "com.android.application", version.ref = "agp" }
+library = { id = "com.android.library", version.ref = "agp" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+materialthemebuilder = { id = "dev.rikka.tools.materialthemebuilder", version.ref = "materialthemebuilder" }

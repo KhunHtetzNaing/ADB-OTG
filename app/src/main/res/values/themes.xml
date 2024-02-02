@@ -1,0 +1,13 @@
+<resources>
+
+    <style name="Base.Theme.AdbOtg" parent="Theme.Material3.Light.AdbOtg">
+        <item name="appColorPrimary">@color/app_color_light</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.AdbOtg" parent="Base.Theme.AdbOtg" />
+</resources>

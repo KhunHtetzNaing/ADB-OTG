@@ -40,9 +40,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.cgutman.adb.AdbBase64;
 import com.cgutman.adb.AdbConnection;
-import com.cgutman.adb.AdbCrypto;
 import com.cgutman.adb.AdbStream;
 import com.cgutman.adb.UsbChannel;
 
@@ -54,7 +52,6 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -63,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     private UsbDevice mDevice;
     private TextView tvStatus, logs;
     private ImageView usb_icon;
-    private AdbCrypto adbCrypto;
     private AdbConnection adbConnection;
     private UsbManager mManager;
     private RelativeLayout terminalView;
@@ -130,26 +126,9 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             }
         };
 
-        AdbBase64 base64 = new MyAdbBase64();
-        try {
-            adbCrypto = AdbCrypto.loadAdbKeyPair(base64, new File(getFilesDir(), "private_key"), new File(getFilesDir(), "public_key"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (adbCrypto == null) {
-            try {
-                adbCrypto = AdbCrypto.generateAdbKeyPair(base64);
-                adbCrypto.saveAdbKeyPair(new File(getFilesDir(), "private_key"), new File(getFilesDir(), "public_key"));
-            } catch (Exception e) {
-                Log.w(Const.TAG, "fail to generate and save key-pair", e);
-            }
-        }
-
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         filter.addAction(Message.USB_PERMISSION);
-
         ContextCompat.registerReceiver(this, mUsbReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
 
         //Check USB
@@ -323,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             if (connection != null) {
                 if (connection.claimInterface(intf, false)) {
                     handler.sendEmptyMessage(CONNECTING);
-                    adbConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
+                    adbConnection = AdbConnection.create(new UsbChannel(connection, intf));
                     adbConnection.connect();
                     //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
                     adbConnection.open("shell:exec date");

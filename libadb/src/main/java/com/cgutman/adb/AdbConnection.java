@@ -42,11 +42,6 @@ public class AdbConnection implements Closeable {
     private int maxData;
 
     /**
-     * An initialized ADB crypto object that contains a key pair.
-     */
-    private AdbCrypto crypto;
-
-    /**
      * Specifies whether this connection has already sent a signed token.
      */
     private boolean sentSignature;
@@ -70,13 +65,11 @@ public class AdbConnection implements Closeable {
      * crypto object specified.
      *
      * @param channel The channel that the connection will use for communcation.
-     * @param crypto  The crypto object that stores the key pair for authentication.
      * @return A new AdbConnection object.
      * @throws java.io.IOException If there is a socket error
      */
-    public static AdbConnection create(AdbChannel channel, AdbCrypto crypto) throws IOException {
+    public static AdbConnection create(AdbChannel channel) throws IOException {
         AdbConnection newConn = new AdbConnection();
-        newConn.crypto = crypto;
         newConn.channel = channel;
         return newConn;
     }
@@ -144,11 +137,11 @@ public class AdbConnection implements Closeable {
                                 if (conn.sentSignature) {
                                     /* We've already tried our signature, so send our public key */
                                     packet = AdbProtocol.generateAuth(AdbProtocol.AUTH_TYPE_RSA_PUBLIC,
-                                            conn.crypto.getAdbPublicKeyPayload());
+                                            Adb.getPublicKey());
                                 } else {
                                     /* We'll sign the token */
                                     packet = AdbProtocol.generateAuth(AdbProtocol.AUTH_TYPE_SIGNATURE,
-                                            conn.crypto.signAdbTokenPayload(msg.getPayload()));
+                                            Adb.sign(msg.getPayloadLength(), msg.getPayload()));
                                     conn.sentSignature = true;
                                 }
 

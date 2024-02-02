@@ -45,9 +45,11 @@ import com.cgutman.adb.AdbConnection;
 import com.cgutman.adb.AdbCrypto;
 import com.cgutman.adb.AdbStream;
 import com.cgutman.adb.UsbChannel;
+
 import com.htetznaing.adbotg.Adapter.SliderAdapterExample;
 import com.htetznaing.adbotg.Model.SliderItem;
 import com.htetznaing.adbotg.UI.SpinnerDialog;
+
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -233,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.wandoujia.flashbot.MainActivity">
+    tools:context="com.htetznaing.adbotg.MainActivity">
 
     <item
         android:id="@+id/go_to_github"

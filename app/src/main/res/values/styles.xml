@@ -1,8 +1,0 @@
-<resources>
-    <style name="AppTheme" parent="Theme.Material3.Light.AdbOtg">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-</resources>

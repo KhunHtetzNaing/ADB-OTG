@@ -77,7 +77,6 @@ public class AdbMessage {
         return checksum;
     }
 
-
     /**
      * The command field of the message
      */

@@ -43,6 +43,7 @@ import com.cgutman.adb.AdbConnection;
 import com.cgutman.adb.AdbStream;
 import com.cgutman.adb.UsbChannel;
 
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.textfield.TextInputEditText;
 
 import com.htetznaing.adbotg.Adapter.SliderAdapterExample;
@@ -64,13 +65,16 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     private TextInputEditText edCommand;
     private Button btnRun;
     private ScrollView scrollView;
+
     private SliderAdapterExample adapter;
     private SliderView sliderView;
+
     private boolean doubleBackToExitPressedOnce = false;
     private SpinnerDialog waitingDialog;
 
     private String user = null;
     private Handler handler;
+
     private UsbDevice mDevice;
     private AdbConnection adbConnection;
     private UsbManager mManager;
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                     case DEVICE_FOUND -> {
                         closeWaiting();
                         tvStatus.setText(getString(R.string.adb_device_connected));
-                        usb_icon.setColorFilter(Color.parseColor("#4CAF50"));
+                        usb_icon.setColorFilter(MaterialColors.getColor(usb_icon, com.google.android.material.R.attr.colorPrimary));
                         checkContainer.setVisibility(View.GONE);
                         terminalView.setVisibility(View.VISIBLE);
                         initCommand();
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                         waitingDialog();
                         closeKeyboard();
                         tvStatus.setText(getString(R.string.waiting_device));
-                        usb_icon.setColorFilter(Color.BLUE);
+                        usb_icon.setColorFilter(MaterialColors.getColor(usb_icon, com.google.android.material.R.attr.colorPrimaryVariant));
                         checkContainer.setVisibility(View.VISIBLE);
                         terminalView.setVisibility(View.GONE);
                     }
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                         closeWaiting();
                         closeKeyboard();
                         tvStatus.setText(getString(R.string.adb_device_not_connected));
-                        usb_icon.setColorFilter(Color.RED);
+                        usb_icon.setColorFilter(MaterialColors.getColor(usb_icon, com.google.android.material.R.attr.colorError));
                         checkContainer.setVisibility(View.VISIBLE);
                         terminalView.setVisibility(View.GONE);
                     }
